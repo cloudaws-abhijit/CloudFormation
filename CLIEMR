@@ -5,7 +5,7 @@ aws emr create-cluster
  --ebs-root-volume-size 10 
  --ec2-attributes
 '{
-    "KeyName":"ec2-abhi",
+    "KeyName":"****",
     "InstanceProfile":"EMR_EC2_DefaultRole",
     "SubnetId":"subnet-4f37e341",
     "EmrManagedSlaveSecurityGroup":"sg-099f21a55e068ed12",
