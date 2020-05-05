@@ -1,0 +1,38 @@
+aws emr create-cluster
+ --auto-scaling-role EMR_AutoScaling_DefaultRole 
+ --termination-protected 
+ --applications Name=Hadoop Name=Hive Name=Spark 
+ --ebs-root-volume-size 10 
+ --ec2-attributes
+'{
+    "KeyName":"ec2-abhi",
+    "InstanceProfile":"EMR_EC2_DefaultRole",
+    "SubnetId":"subnet-4f37e341",
+    "EmrManagedSlaveSecurityGroup":"sg-099f21a55e068ed12",
+    "EmrManagedMasterSecurityGroup":"sg-0049be7ee10655789"
+ }'
+--service-role EMR_DefaultRole 
+--release-label emr-5.29.0 
+--name 'Spark-MR Cluster' 
+--instance-groups
+'[{
+    "InstanceCount":2,
+    "EbsConfiguration":
+    {
+       "EbsBlockDeviceConfigs":[
+        {"
+            VolumeSpecification":{"SizeInGB":32,"VolumeType":"gp2"},"
+            VolumesPerInstance":2
+        }
+        ]
+    },
+    "InstanceGroupType":"CORE",
+    "InstanceType":"m5.xlarge",
+    "Name":"Core -2"
+  },
+  {"InstanceCount":1,"EbsConfiguration":{"EbsBlockDeviceConfigs":[{"
+VolumeSpecification":{"SizeInGB":32,"VolumeType":"gp2"},"
+VolumesPerInstance":2}]},"InstanceGroupType":"MASTER","InstanceType":"m5
+.xlarge","Name":"Master - 1"}]' 
+--scale-down-behavior TERMINATE_AT_TASK_COMPLETION 
+--region us-east-1
